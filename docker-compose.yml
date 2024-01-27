@@ -1,0 +1,51 @@
+version: '3'
+networks:
+  backend:
+  
+services:
+  dashboard:
+    image: parseplatform/parse-dashboard
+    depends_on:
+      - server
+    environment:
+      PARSE_DASHBOARD_ALLOW_INSECURE_HTTP: 1
+    networks:
+      - backend
+
+  db:
+    image: mongo:6
+    volumes:
+      - mongo:/data/db
+    networks:
+      - backend
+
+  server:
+    depends_on:
+      - db
+    environment:
+      PARSE_SERVER_APP_NAME: Highlights
+    volumes:
+      - files:/parse-server/files
+    networks:
+      - backend
+
+  # cron:
+  #   image: xordiv/docker-alpine-cron
+  #   depends_on:
+  #     - server
+  #   networks:
+  #     - backend
+
+volumes:
+  mongo:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./.data/mongo
+      o: bind
+  files:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./.data/files
+      o: bind

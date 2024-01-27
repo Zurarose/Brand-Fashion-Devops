@@ -1,0 +1,69 @@
+version: "3"
+services:
+  dashboard:
+    environment:
+      PARSE_DASHBOARD_CONFIG: |
+        {
+          "apps": [
+            {
+              "serverURL": "http://localhost:1337/",
+              "appId": "brand-fashion",
+              "masterKey": "ZlZtejnYb42iDYJjf7tyyh7TXDBrXiuZ",
+              "restKey": "rPEi1ZOVmcqZ8XIEYhjImDLwZUXH026K",
+              "appName": "brand-fashion",
+              "production":true,
+              "graphQLServerURL": "http://localhost:1337/graphql"
+            }
+          ],
+          "users": [
+            {
+              "user": "admin",
+              "pass": "admin"
+            }
+          ]
+        }
+    ports:
+      - "4040:4040"
+      
+  server:
+    build:
+      context: ../server
+      args:
+        NODE_ENV: development
+    environment:
+      PARSE_SERVER_DATABASE_URI: mongodb://db/parse
+      PARSE_SERVER_APPLICATION_ID: brand-fashion
+      PARSE_SERVER_MASTER_KEY: ZlZtejnYb42iDYJjf7tyyh7TXDBrXiuZ
+      PARSE_SERVER_REST_API_KEY: rPEi1ZOVmcqZ8XIEYhjImDLwZUXH026K
+      PARSE_SERVER_GRAPHGQL_PATH: /graphql
+      PARSE_SERVER_GRAPHGQL_PLAYGROUND: /playground
+
+    volumes:
+      - "../server/cloud-src:/parse-server/cloud-src"
+      - "../server/tests:/parse-server/tests"
+      - "../server/package.json:/parse-server/package.json"
+      - "../server/config:/parse-server/config"
+      - "../server/index.js:/parse-server/index.js"
+    entrypoint: ["yarn", "run", "start"]
+    ports:
+      - 1337:1337
+
+  # cron:
+  #   environment:
+  #     CRON_STRINGS:
+  #       "* * * * * wget -O/dev/null --method='POST' --header='X-Parse-Application-Id: highlights' --header='X-Parse-Master-Key: ZlQ1ejnYb42iDYJjf7tyyh7TXDBrXiuZ'
+  #       http://server:1337/jobs/paymentCheck"
+
+    #mongo bowser
+  mongo-express:
+    image: mongo-express
+    restart: "no"
+    depends_on:
+      - db
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=db
+    ports:
+      - "3377:8081"
+    networks:
+      - backend
+
