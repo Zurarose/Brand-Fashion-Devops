@@ -14,7 +14,7 @@ docker-compose -p brand-fashion up -d
 
 ###### Apply migrations
 ````bash
-docker-compose -p highlights exec -T server npm run migrate:up
+docker-compose -p brand-fashion exec -T server npm run migrate:up
 ````
 
 ###### Stop containers
