@@ -55,15 +55,15 @@ services:
   #       http://server:1337/jobs/paymentCheck"
 
     #mongo bowser
-  mongo-express:
-    image: mongo-express
-    restart: "no"
-    depends_on:
-      - db
-    environment:
-      - ME_CONFIG_MONGODB_SERVER=db
-    ports:
-      - "3377:8081"
-    networks:
-      - backend
+  # mongo-express:
+  #   image: mongo-express
+  #   restart: "no"
+  #   depends_on:
+  #     - db
+  #   environment:
+  #     - ME_CONFIG_MONGODB_SERVER=db
+  #   ports:
+  #     - "3377:8081"
+  #   networks:
+  #     - backend
 
