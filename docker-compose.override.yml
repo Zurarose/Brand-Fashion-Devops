@@ -48,11 +48,13 @@ services:
     ports:
       - 1337:1337
 
-  # cron:
-  #   environment:
-  #     CRON_STRINGS:
-  #       "* * * * * wget -O/dev/null --method='POST' --header='X-Parse-Application-Id: highlights' --header='X-Parse-Master-Key: ZlQ1ejnYb42iDYJjf7tyyh7TXDBrXiuZ'
-  #       http://server:1337/jobs/paymentCheck"
+  cron:
+    environment:
+      CRON_STRINGS:
+        "* * * * * wget -O/dev/null --method='POST' --header='X-Parse-Application-Id: brand-fashion' --header='X-Parse-Master-Key: ZlZtejnYb42iDYJjf7tyyh7TXDBrXiuZ'
+        http://server:1337/jobs/Check_Limited_Bonuses\n
+         * * * * * wget -O/dev/null --method='POST' --header='X-Parse-Application-Id: brand-fashion' --header='X-Parse-Master-Key: ZlZtejnYb42iDYJjf7tyyh7TXDBrXiuZ'
+        http://server:1337/jobs/Check_Users_Birthday"
 
     #mongo bowser
   # mongo-express:
