@@ -39,11 +39,11 @@ services:
       PARSE_SERVER_GRAPHGQL_PLAYGROUND: /playground
 
     volumes:
-      - "../server/cloud-src:/parse-server/cloud-src"
-      - "../server/tests:/parse-server/tests"
-      - "../server/package.json:/parse-server/package.json"
-      - "../server/config:/parse-server/config"
-      - "../server/index.js:/parse-server/index.js"
+      - "../Brand-Fashion-Server/cloud-src:/parse-server/cloud-src"
+      - "../Brand-Fashion-Server/tests:/parse-server/tests"
+      - "../Brand-Fashion-Server/package.json:/parse-server/package.json"
+      - "../Brand-Fashion-Server/config:/parse-server/config"
+      - "../Brand-Fashion-Server/index.js:/parse-server/index.js"
     entrypoint: ["yarn", "run", "start"]
     ports:
       - 1337:1337
