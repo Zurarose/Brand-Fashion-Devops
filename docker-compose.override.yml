@@ -27,7 +27,7 @@ services:
       
   server:
     build:
-      context: ../server
+      context: ../Brand-Fashion-Server
       args:
         NODE_ENV: development
     environment:
