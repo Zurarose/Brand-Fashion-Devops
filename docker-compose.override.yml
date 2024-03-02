@@ -37,13 +37,6 @@ services:
       PARSE_SERVER_REST_API_KEY: rPEi1ZOVmcqZ8XIEYhjImDLwZUXH026K
       PARSE_SERVER_GRAPHGQL_PATH: /graphql
       PARSE_SERVER_GRAPHGQL_PLAYGROUND: /playground
-
-    volumes:
-      - "../Brand-Fashion-Server/cloud-src:/parse-server/cloud-src"
-      - "../Brand-Fashion-Server/tests:/parse-server/tests"
-      - "../Brand-Fashion-Server/package.json:/parse-server/package.json"
-      - "../Brand-Fashion-Server/config:/parse-server/config"
-      - "../Brand-Fashion-Server/index.js:/parse-server/index.js"
     entrypoint: ["yarn", "run", "start"]
     ports:
       - 1337:1337
