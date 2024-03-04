@@ -24,5 +24,5 @@ docker-compose -p highlights stop [container_name]
 
 ###### Stop and remove
 ```shell
-docker-compose -p highlights down [container_name]s
+docker-compose -p highlights down [container_name]
 ```
