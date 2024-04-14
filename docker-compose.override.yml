@@ -29,7 +29,7 @@ services:
     build:
       context: ../Brand-Fashion-Server
       args:
-        NODE_ENV: development
+        NODE_ENV: production
     environment:
       PARSE_SERVER_DATABASE_URI: mongodb://db/parse
       PARSE_SERVER_APPLICATION_ID: brand-fashion
@@ -37,17 +37,33 @@ services:
       PARSE_SERVER_REST_API_KEY: rPEi1ZOVmcqZ8XIEYhjImDLwZUXH026K
       PARSE_SERVER_GRAPHGQL_PATH: /graphql
       PARSE_SERVER_GRAPHGQL_PLAYGROUND: /playground
-    entrypoint: ["yarn", "run", "start"]
     ports:
       - 1337:1337
+
+  web:
+    build:
+      context: ../Brand-Fashion-Web
+      args:
+        NODE_ENV: production
+    environment:
+      VITE_APP_APPLICATION_ID: brand-fashion
+      VITE_APP_API_KEY: rPEi1ZOVmcqZ8XIEYhjImDLwZUXH026K
+      VITE_APP_SERVER_URL: http://server:1337
+      VITE_APP_SERVER_GRAPHQL_URL: http://server:1337/graphql
+      VITE_APP_BASE_AUTH_LOGIN: baseadmin@mail.com
+      VITE_APP_BASE_AUTH_PASSWORD: 123456
+    ports:
+      - 80:80
 
   cron:
     environment:
       CRON_STRINGS:
-        "* * * * * wget -O/dev/null --method='POST' --header='X-Parse-Application-Id: brand-fashion' --header='X-Parse-Master-Key: ZlZtejnYb42iDYJjf7tyyh7TXDBrXiuZ'
+        "*/60 * * * * wget -O/dev/null --method='POST' --header='X-Parse-Application-Id: brand-fashion' --header='X-Parse-Master-Key: ZlZtejnYb42iDYJjf7tyyh7TXDBrXiuZ'
         http://server:1337/jobs/Check_Limited_Bonuses\n
-         * * * * * wget -O/dev/null --method='POST' --header='X-Parse-Application-Id: brand-fashion' --header='X-Parse-Master-Key: ZlZtejnYb42iDYJjf7tyyh7TXDBrXiuZ'
-        http://server:1337/jobs/Check_Users_Birthday"
+         */30 * * * * wget -O/dev/null --method='POST' --header='X-Parse-Application-Id: brand-fashion' --header='X-Parse-Master-Key: ZlZtejnYb42iDYJjf7tyyh7TXDBrXiuZ'
+        http://server:1337/jobs/Check_Users_Birthday\n
+         0 */4 * * * wget -O/dev/null --method='POST' --header='X-Parse-Application-Id: brand-fashion' --header='X-Parse-Master-Key: ZlZtejnYb42iDYJjf7tyyh7TXDBrXiuZ'
+        http://server:1337/jobs/Remove_Unactive_Clients"
 
     #mongo bowser
   # mongo-express:
